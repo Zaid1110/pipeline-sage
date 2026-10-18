@@ -1,0 +1,46 @@
+2026-10-18T12:01:02.111Z ##[group]Run actions/checkout@v4
+2026-10-18T12:01:02.112Z with:
+2026-10-18T12:01:02.112Z   fetch-depth: 0
+2026-10-18T12:01:03.401Z Syncing repository: Zaid1110/cloudops-microservices-platform
+2026-10-18T12:01:03.402Z ##[endgroup]
+2026-10-18T12:01:04.010Z ##[group]Run actions/setup-node@v4
+2026-10-18T12:01:04.011Z with:
+2026-10-18T12:01:04.011Z   node-version: 20
+2026-10-18T12:01:05.900Z Found in cache @ /opt/hostedtoolcache/node/20.18.0/x64
+2026-10-18T12:01:05.901Z ##[endgroup]
+2026-10-18T12:01:06.120Z ##[group]Run npm ci
+2026-10-18T12:01:06.121Z npm ci
+2026-10-18T12:01:06.122Z shell: /usr/bin/bash -e {0}
+2026-10-18T12:01:06.123Z env:
+2026-10-18T12:01:06.124Z   NODE_ENV: production
+2026-10-18T12:01:42.310Z added 812 packages in 36s
+2026-10-18T12:01:42.311Z ##[endgroup]
+2026-10-18T12:01:43.000Z ##[group]Run npm test
+2026-10-18T12:01:43.001Z npm test
+2026-10-18T12:01:43.002Z shell: /usr/bin/bash -e {0}
+2026-10-18T12:01:48.210Z > orders-service@1.4.2 test
+2026-10-18T12:01:48.211Z > jest --ci --runInBand
+2026-10-18T12:01:52.903Z PASS  src/utils/pricing.test.js
+2026-10-18T12:01:54.120Z FAIL  src/routes/orders.test.js
+2026-10-18T12:01:54.121Z   ● Order API › POST /orders › returns 201 with valid payload
+2026-10-18T12:01:54.122Z     expect(received).toBe(expected) // Object.is equality
+2026-10-18T12:01:54.123Z     Expected: 201
+2026-10-18T12:01:54.124Z     Received: 500
+2026-10-18T12:01:54.125Z       at Object.<anonymous> (src/routes/orders.test.js:41:23)
+2026-10-18T12:01:54.126Z   ● Order API › POST /orders › rejects invalid payload
+2026-10-18T12:01:54.127Z     expect(received).toBe(expected) // Object.is equality
+2026-10-18T12:01:54.128Z     Expected: 400
+2026-10-18T12:01:54.129Z     Received: 500
+2026-10-18T12:01:54.130Z       at Object.<anonymous> (src/routes/orders.test.js:58:7)
+2026-10-18T12:01:54.131Z   ● Order API › GET /orders/:id › returns 404 for missing order
+2026-10-18T12:01:54.132Z     expect(received).toBe(expected) // Object.is equality
+2026-10-18T12:01:54.133Z     Expected: 404
+2026-10-18T12:01:54.134Z     Received: 500
+2026-10-18T12:01:54.135Z       at Object.<anonymous> (src/routes/orders.test.js:73:19)
+2026-10-18T12:01:56.400Z Test Suites: 1 failed, 1 passed, 2 total
+2026-10-18T12:01:56.401Z Tests:       3 failed, 5 passed, 8 total
+2026-10-18T12:01:56.402Z Snapshots:   0 total
+2026-10-18T12:01:56.403Z Time:        4.2 s
+2026-10-18T12:01:56.404Z Ran all test suites.
+2026-10-18T12:01:56.420Z ##[error]Process completed with exit code 1.
+2026-10-18T12:01:56.421Z ##[endgroup]
