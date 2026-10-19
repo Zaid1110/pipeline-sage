@@ -1,5 +1,7 @@
 # pipeline-sage — CI/CD Failure Triage Bot
 
+![Python 3.10+](https://img.shields.io/badge/Python-3.10%2B-blue?logo=python&logoColor=white) ![License: MIT](https://img.shields.io/badge/License-MIT-green) ![Demo: no API key needed](https://img.shields.io/badge/demo-no_API_key_needed-orange)
+
 ## What this is
 
 pipeline-sage reads a CI build log (e.g. a GitHub Actions run log), finds the
@@ -42,6 +44,40 @@ well-known categories.
 | Build fails → open the Actions UI → scroll through 800 lines → guess which step failed | `python3 pipeline_sage.py analyze build.log` → failing step + cause + fix in seconds |
 | Same class of failure (e.g. expired token) debugged from scratch every time | Pattern library recognises the category immediately and points at the known fix |
 | Failure context shared by pasting raw log chunks into chat | Clean Markdown report, or auto-posted as a PR comment with `--post-comment` |
+
+## See it in action
+
+**The problem: a red build, hundreds of log lines**
+
+```text
+$ ./demo.sh
+=== pipeline-sage demo (heuristic mode, no API key needed) ===
+
+# pipeline-sage diagnosis (heuristic mode)
+
+**Failing step:** `npm test`
+
+**Category:** Test failures
+
+**Likely cause:** One or more automated tests failed. The log shows failing assertions (expected vs received mismatches) in the test suite.
+
+**Suggested fix:** Run the failing test file locally to reproduce, e.g. `npx jest src/routes/orders.test.js`. Fix the code under test (here every endpoint returned 500, so check the route handler / DB connection), then re-run the full suite before pushing.
+
+**Key error lines:**
+
+    2026-10-18T12:01:54.120Z FAIL  src/routes/orders.test.js
+    2026-10-18T12:01:54.123Z     Expected: 201
+    2026-10-18T12:01:54.124Z     Received: 500
+    2026-10-18T12:01:54.125Z       at Object.<anonymous> (src/routes/orders.test.js:41:23)
+    2026-10-18T12:01:54.128Z     Expected: 400
+    2026-10-18T12:01:54.129Z     Received: 500
+    2026-10-18T12:01:54.130Z       at Object.<anonymous> (src/routes/orders.test.js:58:7)
+    2026-10-18T12:01:54.133Z     Expected: 404
+    2026-10-18T12:01:54.134Z     Received: 500
+    2026-10-18T12:01:56.400Z Test Suites: 1 failed, 1 passed, 2 total
+    2026-10-18T12:01:56.401Z Tests:       3 failed, 5 passed, 8 total
+    2026-10-18T12:01:56.420Z ##[error]Process completed with exit code 1.
+```
 
 ## How to run the demo
 
